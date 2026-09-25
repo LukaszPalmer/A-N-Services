@@ -1,10 +1,7 @@
 import { services } from "@/content/services";
 import type { NavItem } from "@/types";
 
-/**
- * Zentrale Firmendaten.
- * TODO: Offen sind noch E-Mail-Adresse und Domain (`url` bzw. NEXT_PUBLIC_SITE_URL).
- */
+/** Zentrale Firmendaten. */
 const name = "A&N Service";
 
 export const siteConfig = {
@@ -18,9 +15,8 @@ export const siteConfig = {
   contact: {
     phone: "+49 178 6668590",
     phoneHref: "tel:+491786668590",
-    // TODO: E-Mail-Adresse bestätigen, sobald die Domain steht
-    email: "info@an-service.de",
-    emailHref: "mailto:info@an-service.de",
+    email: "kontakt@services-an.de",
+    emailHref: "mailto:kontakt@services-an.de",
     whatsappHref: "https://wa.me/491786668590",
     address: {
       street: "Homberger Straße 83",
