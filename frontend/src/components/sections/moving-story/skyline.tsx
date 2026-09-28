@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { ComponentProps } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -43,18 +43,16 @@ const layers = {
   near: createSkyline(42, 5, 14),
 };
 
-type SkylineProps = {
+type SkylineProps = ComponentProps<"svg"> & {
   layer: keyof typeof layers;
-  className?: string;
-  style?: CSSProperties;
 };
 
 /** Stadtsilhouette (130 × 30 Szenen-Einheiten) mit einzelnen beleuchteten Fenstern. */
-export function Skyline({ layer, className, style }: SkylineProps) {
+export function Skyline({ layer, className, ...rest }: SkylineProps) {
   const { buildings, windows } = layers[layer];
 
   return (
-    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} aria-hidden className={cn("overflow-visible", className)} style={style}>
+    <svg viewBox={`0 0 ${WIDTH} ${HEIGHT}`} aria-hidden className={cn("overflow-visible", className)} {...rest}>
       <g className={layer === "far" ? "fill-ink-900" : "fill-ink-800"}>
         {buildings.map((b) => (
           <rect key={b.x} x={b.x} y={HEIGHT - b.h} width={b.w} height={b.h} />

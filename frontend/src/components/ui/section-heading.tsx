@@ -9,6 +9,8 @@ type SectionHeadingProps = {
   description?: ReactNode;
   align?: "left" | "center";
   tone?: "light" | "dark";
+  /** Überschrift-Ebene – Standard h2 */
+  as?: "h1" | "h2";
   className?: string;
 };
 
@@ -18,23 +20,30 @@ export function SectionHeading({
   description,
   align = "left",
   tone = "light",
+  as: Heading = "h2",
   className,
 }: SectionHeadingProps) {
   const isDark = tone === "dark";
 
   return (
-    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
+    <div className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow && <Eyebrow variant={isDark ? "dark" : "soft"}>{eyebrow}</Eyebrow>}
-      <h2
+      <Heading
         className={cn(
-          "mt-5 text-3xl leading-[1.1] font-semibold sm:text-4xl lg:text-5xl",
+          "mt-6 text-[2.15rem] leading-[1.04] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-[3.6rem]",
           isDark ? "text-white" : "text-ink-950",
         )}
       >
         {title}
-      </h2>
+      </Heading>
       {description && (
-        <p className={cn("mt-5 text-lg leading-relaxed", isDark ? "text-white/70" : "text-ink-600")}>
+        <p
+          className={cn(
+            "mt-6 text-lg leading-relaxed",
+            align === "center" && "mx-auto max-w-2xl",
+            isDark ? "text-white/65" : "text-ink-600",
+          )}
+        >
           {description}
         </p>
       )}
@@ -42,7 +51,14 @@ export function SectionHeading({
   );
 }
 
-/** Hebt einzelne Wörter in Überschriften in der Markenfarbe hervor. */
-export function Highlight({ children }: { children: ReactNode }) {
-  return <span className="text-brand-500">{children}</span>;
+/**
+ * Hebt einzelne Wörter in Überschriften hervor: kursive Serifenschrift in Markenfarbe.
+ * Der Kontrast Geometrie ↔ Serife ist ein fester Teil der Marke.
+ */
+export function Highlight({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <span className={cn("font-serif text-[1.08em] leading-none font-normal tracking-[-0.01em] text-brand-500 italic", className)}>
+      {children}
+    </span>
+  );
 }

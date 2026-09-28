@@ -9,7 +9,9 @@ export const siteConfig = {
   /** Inhaber – für Impressum, Datenschutz und strukturierte Daten */
   owner: "Ahmad Alnasar",
   claim: "Wir packen das.",
-  description: `${name} – Ihr Experte für Umzüge, Montage, Entrümpelung, Bodenverlegung, Malerarbeiten und Gartenpflege. Zuverlässig, versichert, zum fairen Festpreis und rund um die Uhr erreichbar.`,
+  /** Wichtigster Suchbegriff – steht in Startseiten-Titel, H1 und strukturierten Daten */
+  primaryKeyword: "Umzugsunternehmen in Moers",
+  description: `${name} – Ihr Umzugsunternehmen in Moers: Umzüge, Möbelmontage, Entrümpelung, Bodenverlegung, Malerarbeiten und Gartenpflege. Festpreis, versichert und rund um die Uhr erreichbar.`,
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "de_DE",
   contact: {
@@ -22,11 +24,42 @@ export const siteConfig = {
       street: "Homberger Straße 83",
       zip: "47441",
       city: "Moers",
+      region: "Nordrhein-Westfalen",
+      regionCode: "DE-NW",
     },
+    /** Google-Maps-Suche nach der Adresse (ohne eingebettete Karte → keine Datenübertragung beim Seitenaufruf) */
+    mapsHref: "https://www.google.com/maps/search/?api=1&query=Homberger+Stra%C3%9Fe+83%2C+47441+Moers",
     /** 24/7 – wird im Footer, auf der Kontaktseite und in den strukturierten Daten ausgegeben */
     openingHours: [{ days: "Mo – So", hours: "00:00 – 24:00 Uhr" }],
     openingHoursNote: "24 Stunden geöffnet – rund um die Uhr für Sie erreichbar.",
     openingHoursShort: "24 h geöffnet",
+  },
+  /**
+   * Einsatzgebiet – Sitz in Moers, Aufträge am Niederrhein, im Ruhrgebiet und deutschlandweit
+   * (siehe content/faq.ts). Die Orte erscheinen im Abschnitt "Einsatzgebiet", in den
+   * Meta-Beschreibungen und als `areaServed` in den strukturierten Daten.
+   * TODO: Liste mit dem Kunden abstimmen (nur Orte, die wirklich regelmäßig angefahren werden).
+   */
+  serviceArea: {
+    cities: [
+      "Moers",
+      "Duisburg",
+      "Krefeld",
+      "Neukirchen-Vluyn",
+      "Kamp-Lintfort",
+      "Rheinberg",
+      "Dinslaken",
+      "Oberhausen",
+      "Kempen",
+      "Düsseldorf",
+    ],
+    regions: ["Niederrhein", "Ruhrgebiet", "Nordrhein-Westfalen"],
+    note: "Fernumzüge deutschlandweit",
+  },
+  /** Umsetzung der Website – erscheint im Footer und in den strukturierten Daten (WebSite.creator) */
+  webdesign: {
+    name: "Palmer-digital",
+    url: "https://palmer-digital.de/",
   },
 } as const;
 

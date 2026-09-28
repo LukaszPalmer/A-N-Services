@@ -34,6 +34,7 @@ import {
 } from "lucide-react";
 
 import { images } from "@/content/images";
+import { videos } from "@/content/videos";
 import type { Service, ServiceSlug } from "@/types";
 
 /**
@@ -54,6 +55,22 @@ export const services: Service[] = [
       "Ein Umzug ist mehr als Kisten schleppen. Wir übernehmen die komplette Organisation – von der Halteverbotszone über das sichere Verpacken bis zum Aufbau in Ihrem neuen Zuhause. Sie lehnen sich zurück, wir packen das.",
     icon: Truck,
     image: images.umzug,
+    video: videos.umzuege,
+    headline: "Umzug in Moers",
+    seoTitle: "Umzug Moers – Umzugsfirma für Privat- & Firmenumzüge",
+    seoDescription:
+      "Umzugsfirma in Moers: Privat-, Firmen- und Fernumzüge sowie Möbeltransporte zum Festpreis – inkl. Halteverbotszone, Verpackung und Montage. 24/7 erreichbar.",
+    keywords: [
+      "Umzugsunternehmen Moers",
+      "Umzugsfirma Moers",
+      "Umzug Moers",
+      "Privatumzug",
+      "Firmenumzug",
+      "Fernumzug",
+      "Möbeltransport",
+      "Umzugshelfer",
+      "Halteverbotszone",
+    ],
     highlights: ["Privat- & Firmenumzüge", "Möbeltransporte", "Halteverbotszone inklusive"],
     features: [
       {
@@ -103,6 +120,11 @@ export const services: Service[] = [
         answer:
           "Ja, Ihr Umzugsgut ist während Transport und Montage über unsere Haftpflicht- und Transportversicherung abgesichert.",
       },
+      {
+        question: "In welchen Orten führen Sie Umzüge durch?",
+        answer:
+          "Unser Sitz ist in Moers. Von hier aus ziehen wir Sie in Moers, Duisburg, Krefeld, Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg und am gesamten Niederrhein um – Fernumzüge übernehmen wir deutschlandweit.",
+      },
     ],
   },
   {
@@ -116,6 +138,20 @@ export const services: Service[] = [
       "Ob neuer Kleiderschrank, komplette Küche oder die Deckenlampe im Wohnzimmer: Unsere Monteure bauen fachgerecht auf, ab und um – sauber, zügig und mit Blick fürs Detail.",
     icon: Wrench,
     image: images.montage,
+    video: videos.montageservice,
+    headline: "Möbelmontage & Küchenmontage in Moers",
+    seoTitle: "Möbelmontage & Küchenmontage in Moers",
+    seoDescription:
+      "Möbel-, Küchen- und Lampenmontage in Moers und Umgebung: Aufbau, Abbau und Wandmontage vom Profi – mit Werkzeug, sauber und zum transparenten Festpreis.",
+    keywords: [
+      "Möbelmontage Moers",
+      "Küchenmontage Moers",
+      "Möbelaufbau",
+      "Küche aufbauen lassen",
+      "Lampenmontage",
+      "TV-Wandmontage",
+      "Montageservice",
+    ],
     highlights: ["Möbel- & Küchenmontage", "Lampen & Wandmontage", "Ab- und Aufbau beim Umzug"],
     features: [
       {
@@ -165,6 +201,11 @@ export const services: Service[] = [
         answer:
           "Nach Aufwand oder als Festpreis – Sie erhalten vorab ein transparentes Angebot, damit es keine Überraschungen gibt.",
       },
+      {
+        question: "Kommen Sie für eine Montage auch nach Duisburg oder Krefeld?",
+        answer:
+          "Ja. Wir montieren in Moers, Duisburg, Krefeld, Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg und am ganzen Niederrhein – auch als Einzelauftrag ohne Umzug.",
+      },
     ],
   },
   {
@@ -178,6 +219,20 @@ export const services: Service[] = [
       "Ob Keller, Dachboden oder komplette Haushaltsauflösung: Wir räumen diskret und zügig, trennen fachgerecht und hinterlassen die Räume besenrein. Verwertbares wird gespendet oder recycelt.",
     icon: Recycle,
     image: images.entruempelung,
+    video: videos.entruempelung,
+    headline: "Entrümpelung & Haushaltsauflösung in Moers",
+    seoTitle: "Entrümpelung & Haushaltsauflösung in Moers",
+    seoDescription:
+      "Entrümpelung in Moers: Wohnungen, Keller, Dachböden und komplette Haushaltsauflösungen – diskret, mit fachgerechter Entsorgung und besenreiner Übergabe zum Festpreis.",
+    keywords: [
+      "Entrümpelung Moers",
+      "Haushaltsauflösung Moers",
+      "Wohnungsauflösung",
+      "Kellerentrümpelung",
+      "Entsorgung",
+      "Sperrmüll",
+      "besenreine Übergabe",
+    ],
     highlights: ["Wohnungs- & Haushaltsauflösung", "Keller, Dachboden & Garage", "Besenreine Übergabe"],
     features: [
       {
@@ -227,6 +282,11 @@ export const services: Service[] = [
         answer:
           "Ja, wertvolle Möbel oder Gegenstände können mit den Kosten verrechnet werden. Das besprechen wir bei der Besichtigung.",
       },
+      {
+        question: "Wo bieten Sie Entrümpelungen an?",
+        answer:
+          "In Moers und der ganzen Region: Duisburg, Krefeld, Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg, Dinslaken und am Niederrhein. Für größere Haushaltsauflösungen kommen wir auch weiter.",
+      },
     ],
   },
   {
@@ -240,6 +300,20 @@ export const services: Service[] = [
       "Kaum etwas verändert einen Raum so sehr wie ein neuer Boden. Wir prüfen den Untergrund, gleichen ihn aus und verlegen Laminat, Vinyl oder PVC sauber bis in die letzte Ecke – Sockelleisten und Übergangsprofile inklusive. Den alten Belag nehmen wir gleich mit.",
     icon: Ruler,
     image: images.boden,
+    video: videos.bodenverlegung,
+    headline: "Bodenverlegung in Moers",
+    seoTitle: "Bodenverlegung Moers – Laminat, Vinyl & PVC verlegen",
+    seoDescription:
+      "Laminat, Vinyl und PVC in Moers fachgerecht verlegen lassen – inkl. Untergrund, Trittschalldämmung, Sockelleisten und Entsorgung des alten Belags. Festpreis nach Besichtigung.",
+    keywords: [
+      "Bodenverlegung Moers",
+      "Laminat verlegen Moers",
+      "Vinylboden verlegen",
+      "PVC verlegen",
+      "Designboden",
+      "Sockelleisten",
+      "Bodenleger",
+    ],
     highlights: ["Laminat, Vinyl & PVC", "Untergrund & Trittschalldämmung", "Sockelleisten inklusive"],
     features: [
       {
@@ -289,6 +363,11 @@ export const services: Service[] = [
         answer:
           "Bei schwimmend verlegtem Laminat und Klick-Vinyl ja – direkt nach dem letzten Handgriff. Vollflächig verklebte Böden brauchen je nach Kleber 24 bis 48 Stunden.",
       },
+      {
+        question: "In welcher Region verlegen Sie Böden?",
+        answer:
+          "Wir verlegen Laminat, Vinyl und PVC in Moers, Duisburg, Krefeld, Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg und am gesamten Niederrhein.",
+      },
     ],
   },
   {
@@ -302,6 +381,20 @@ export const services: Service[] = [
       "Ob Renovierung vor dem Einzug oder Schönheitsreparatur bei der Übergabe: Wir spachteln, grundieren, tapezieren und streichen. Möbel und Böden decken wir vollständig ab, Kanten kleben wir sauber ab – und am Ende ist aus der Baustelle wieder eine Wohnung geworden.",
     icon: PaintRoller,
     image: images.maler,
+    video: videos.malerarbeiten,
+    headline: "Malerarbeiten in Moers",
+    seoTitle: "Malerarbeiten Moers – Streichen & Tapezieren",
+    seoDescription:
+      "Maler- und Tapezierarbeiten in Moers: Wände und Decken streichen, tapezieren, lackieren und Schönheitsreparaturen zur Wohnungsübergabe – sauber abgedeckt, zum Festpreis.",
+    keywords: [
+      "Malerarbeiten Moers",
+      "Maler Moers",
+      "Wände streichen lassen",
+      "Tapezieren",
+      "Schönheitsreparaturen",
+      "Renovierung",
+      "Lackierarbeiten",
+    ],
     highlights: ["Wände & Decken streichen", "Tapezieren & Tapete entfernen", "Schönheitsreparaturen"],
     features: [
       {
@@ -351,6 +444,11 @@ export const services: Service[] = [
         answer:
           "Ja. Wir kaufen das Material in der gewünschten Qualität ein – der Einkauf steht transparent und nachvollziehbar in Ihrem Angebot.",
       },
+      {
+        question: "Für welche Orte übernehmen Sie Malerarbeiten?",
+        answer:
+          "Für Moers und die Umgebung – Duisburg, Krefeld, Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg und den Niederrhein. Gern auch kombiniert mit Ihrem Umzug oder Ihrer Wohnungsübergabe.",
+      },
     ],
   },
   {
@@ -364,6 +462,20 @@ export const services: Service[] = [
       "Vom wöchentlichen Rasenschnitt bis zum großen Herbstputz: Wir halten Ihren Garten in Form – für Eigentümer, Vermieter und Hausverwaltungen. Auf Wunsch übernehmen wir die Pflege regelmäßig nach festem Plan, damit Sie sich um nichts mehr kümmern müssen.",
     icon: Shrub,
     image: images.garten,
+    video: videos.gartenpflege,
+    headline: "Gartenpflege in Moers",
+    seoTitle: "Gartenpflege Moers – Rasen, Hecke & Grünschnitt",
+    seoDescription:
+      "Gartenpflege in Moers: Rasen mähen, Hecken schneiden, Beetpflege, Laub und Grünschnitt-Entsorgung – einmalig oder regelmäßig nach Plan, für Privat und Hausverwaltung.",
+    keywords: [
+      "Gartenpflege Moers",
+      "Heckenschnitt Moers",
+      "Rasen mähen lassen",
+      "Gartenservice",
+      "Grünschnitt Entsorgung",
+      "Laubentfernung",
+      "Winterdienst",
+    ],
     highlights: ["Rasen- & Heckenschnitt", "Beetpflege & Unkraut", "Grünschnitt-Entsorgung inklusive"],
     features: [
       {
@@ -412,6 +524,11 @@ export const services: Service[] = [
         question: "Arbeiten Sie auch für Vermieter und Hausverwaltungen?",
         answer:
           "Gern. Für Mehrfamilienhäuser und Gewerbeflächen erstellen wir Jahres-Pflegepläne mit fester Rechnungsstellung und dokumentierten Einsätzen.",
+      },
+      {
+        question: "In welchem Umkreis übernehmen Sie die Gartenpflege?",
+        answer:
+          "Rund um Moers – in Neukirchen-Vluyn, Kamp-Lintfort, Rheinberg, Duisburg, Krefeld und am Niederrhein. Regelmäßige Pflege planen wir mit festen Terminen.",
       },
     ],
   },

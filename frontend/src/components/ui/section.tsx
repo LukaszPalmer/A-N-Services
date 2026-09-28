@@ -15,5 +15,5 @@ type SectionProps = ComponentProps<"section"> & {
 };
 
 export function Section({ tone = "white", className, ...props }: SectionProps) {
-  return <section className={cn("relative py-20 sm:py-28", tones[tone], className)} {...props} />;
+  return <section className={cn("relative py-24 sm:py-32", tones[tone], className)} {...props} />;
 }

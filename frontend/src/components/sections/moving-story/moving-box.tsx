@@ -1,9 +1,9 @@
-import type { CSSProperties } from "react";
+import type { ComponentProps } from "react";
 
 /** Umzugskarton mit Klebeband & Etikett. */
-export function MovingBox({ className, style }: { className?: string; style?: CSSProperties }) {
+export function MovingBox(props: ComponentProps<"svg">) {
   return (
-    <svg viewBox="0 0 40 34" aria-hidden className={className} style={style}>
+    <svg viewBox="0 0 40 34" aria-hidden {...props}>
       <rect x="1" y="3" width="38" height="30" rx="2" className="fill-sand-400" />
       <rect x="1" y="3" width="38" height="7" rx="2" className="fill-sand-300" />
       <rect x="17" y="3" width="6" height="30" className="fill-sand-200/80" />

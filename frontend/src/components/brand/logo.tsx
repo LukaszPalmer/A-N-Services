@@ -1,6 +1,15 @@
 import Link from "next/link";
 
-import { SpeedLines } from "@/components/brand/speed-lines";
+import {
+  LOGO_VIEWBOX_X,
+  LOGO_WIDTH,
+  MARK_AMP,
+  MARK_HOUSE,
+  MARK_LINES,
+  WORD_AMP,
+  WORD_AN,
+  WORD_SERVICE,
+} from "@/components/brand/logo-paths";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
 
@@ -10,11 +19,16 @@ type LogoProps = {
 };
 
 /**
- * Wortmarke A&N Service.
+ * Wort-Bild-Marke A&N Service.
  *
- * Aufbau: abgerundetes Signet mit den Speed-Lines und dem orangefarbenen „&",
- * daneben der Schriftzug „A&N" über dem gesperrten „SERVICE".
- * Das Signet gibt es als Favicon ebenfalls unter app/icon.svg – beide zusammen ändern.
+ * Signet „Haus in Bewegung": Dach, rechte Wand und Boden als Kontur – die linke
+ * Wand löst sich in drei orangefarbene Speed-Lines auf (Umzug = Zuhause in Bewegung).
+ * Im Haus das „&" aus dem Firmennamen. Rechts die Wortmarke „A&N" mit
+ * orangefarbenem „&" über dem auf gleiche Breite ausgetriebenen „SERVICE".
+ *
+ * Alles liegt als Vektorpfad vor (logo-paths.ts) und sieht damit überall identisch
+ * aus – unabhängig von geladenen Schriften. Favicon: app/icon.svg (gleiches Signet
+ * auf dunkler Kachel). Beide zusammen ändern.
  */
 export function Logo({ tone = "dark", className }: LogoProps) {
   const isLight = tone === "light";
@@ -23,37 +37,54 @@ export function Logo({ tone = "dark", className }: LogoProps) {
     <Link
       href="/"
       aria-label={`${siteConfig.name} – zur Startseite`}
-      className={cn("group/logo inline-flex items-center gap-2.5", className)}
+      className={cn("group/logo inline-flex shrink-0 items-center", className)}
     >
-      <span
-        className={cn(
-          "relative grid size-11 shrink-0 place-items-center overflow-hidden rounded-2xl",
-          "transition-transform duration-300 group-hover/logo:-translate-y-0.5",
-          isLight ? "bg-white/10 ring-1 ring-white/20" : "bg-ink-950",
-        )}
-      >
-        <SpeedLines className="absolute -left-1.5 w-9 text-white/20" />
-        <span className="relative text-[1.45rem] leading-none font-semibold text-brand-500">&amp;</span>
-      </span>
-
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "text-[1.35rem] leading-none font-semibold tracking-tight",
-            isLight ? "text-white" : "text-ink-950",
-          )}
-        >
-          A<span className="text-brand-500">&amp;</span>N
-        </span>
-        <span
-          className={cn(
-            "mt-1.5 text-[0.62rem] leading-none font-semibold tracking-[0.28em] uppercase",
-            isLight ? "text-white/55" : "text-ink-400",
-          )}
-        >
-          Service
-        </span>
-      </span>
+      <LogoMark
+        className={cn("h-11 w-auto", isLight ? "text-white" : "text-ink-950")}
+        subtleClassName={isLight ? "fill-white/60" : "fill-ink-500"}
+      />
     </Link>
+  );
+}
+
+/** Nur die Grafik – z. B. für Footer-Wasserzeichen oder Social-Media-Bilder. */
+export function LogoMark({
+  className,
+  subtleClassName = "fill-ink-500",
+  withWordmark = true,
+}: {
+  className?: string;
+  subtleClassName?: string;
+  withWordmark?: boolean;
+}) {
+  const width = withWordmark ? LOGO_WIDTH - LOGO_VIEWBOX_X : 64 - LOGO_VIEWBOX_X;
+
+  return (
+    <svg viewBox={`${LOGO_VIEWBOX_X} 0 ${width} 64`} aria-hidden className={className}>
+      <path
+        d={MARK_HOUSE}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={4.8}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* Speed-Lines: ziehen beim Hover kurz nach links – das Haus "fährt los" */}
+      <path
+        d={MARK_LINES}
+        className="stroke-brand-500 transition-transform duration-500 ease-out group-hover/logo:-translate-x-1"
+        strokeWidth={4.8}
+        strokeLinecap="round"
+      />
+      <path d={MARK_AMP} className="fill-brand-500" />
+
+      {withWordmark && (
+        <>
+          <path d={WORD_AN} fill="currentColor" />
+          <path d={WORD_AMP} className="fill-brand-500" />
+          <path d={WORD_SERVICE} className={subtleClassName} />
+        </>
+      )}
+    </svg>
   );
 }

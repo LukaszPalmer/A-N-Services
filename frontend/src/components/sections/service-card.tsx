@@ -2,54 +2,90 @@ import { ArrowUpRight, Check } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { cn } from "@/lib/utils";
 import type { Service } from "@/types";
 
-export function ServiceCard({ service }: { service: Service }) {
+type ServiceCardProps = {
+  service: Service;
+  /** Laufende Nummer ("01") */
+  index: number;
+  /** Große Kachel im Bento-Raster */
+  featured?: boolean;
+  className?: string;
+};
+
+/**
+ * Bildkarte einer Leistung: Foto füllt die Karte, Text liegt auf einem Verlauf.
+ * Hover (Desktop): Bild zoomt langsam, Pfeil dreht, Stichpunkte fahren ein.
+ * Auf Touch-Geräten sind alle Inhalte ohne Hover sichtbar.
+ */
+export function ServiceCard({ service, index, featured = false, className }: ServiceCardProps) {
   return (
-    <article className="group relative flex w-full flex-col overflow-hidden rounded-4xl bg-sand-50 ring-1 ring-ink-900/5 transition duration-500 hover:-translate-y-1 hover:shadow-lifted">
-      <div className="relative m-2 aspect-[4/3] overflow-hidden rounded-3xl">
-        <Image
-          src={service.image.src}
-          alt={service.image.alt}
-          fill
-          placeholder="blur"
-          sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-          className="object-cover transition duration-700 group-hover:scale-105"
-        />
-        <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink-950/80 via-ink-950/25 to-transparent" />
-        <span className="absolute top-4 left-4 grid size-12 place-items-center rounded-2xl bg-white text-brand-600 shadow-soft">
-          <service.icon className="size-5.5" strokeWidth={1.75} aria-hidden />
-        </span>
-        <span className="absolute bottom-4 left-5 text-sm font-medium text-white">{service.tagline}</span>
-      </div>
+    <article
+      className={cn(
+        "group relative isolate flex w-full flex-col justify-end overflow-hidden rounded-4xl bg-ink-950 p-6 text-white sm:p-8",
+        featured ? "min-h-[30rem] lg:min-h-full" : "min-h-[26rem]",
+        className,
+      )}
+    >
+      <Image
+        src={service.image.src}
+        alt={service.image.alt}
+        fill
+        placeholder="blur"
+        sizes={featured ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"}
+        className="-z-20 object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+      />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-t from-ink-950 via-ink-950/60 to-ink-950/0" />
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-10 bg-linear-to-t from-brand-700/50 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+      />
 
-      <div className="flex flex-1 flex-col px-6 pt-4 pb-7 sm:px-7">
-        <h3 className="text-2xl font-semibold text-ink-950">{service.title}</h3>
-        <p className="mt-3 leading-relaxed text-ink-600">{service.description}</p>
-
-        <ul className="mt-6 space-y-2.5">
-          {service.highlights.map((highlight) => (
-            <li key={highlight} className="flex items-center gap-3 text-sm text-ink-800">
-              <span className="grid size-5 place-items-center rounded-full bg-brand-500 text-white">
-                <Check className="size-3" strokeWidth={3} aria-hidden />
-              </span>
-              {highlight}
-            </li>
-          ))}
-        </ul>
-
-        {/* Der Link spannt über die ganze Karte (after:inset-0) */}
-        <Link
-          href={service.href}
-          className="mt-auto inline-flex items-center gap-2 pt-8 font-medium text-ink-950 after:absolute after:inset-0 after:rounded-4xl"
-        >
-          Mehr erfahren
-          <span className="grid size-8 place-items-center rounded-full bg-ink-950 text-white transition duration-300 group-hover:rotate-45 group-hover:bg-brand-500">
-            <ArrowUpRight className="size-4" aria-hidden />
+      {/* Kopfzeile */}
+      <div className="absolute inset-x-6 top-6 flex items-start justify-between sm:inset-x-8 sm:top-8">
+        <span className="inline-flex items-center gap-2 rounded-full bg-ink-950/45 py-1.5 pr-3.5 pl-2 text-xs font-medium text-white/90 ring-1 ring-white/15 backdrop-blur-sm">
+          <span className="grid size-6 place-items-center rounded-full bg-brand-500 text-white">
+            <service.icon className="size-3.5" strokeWidth={2} aria-hidden />
           </span>
-          <span className="sr-only">über {service.title}</span>
-        </Link>
+          <span className="tabular-nums">{String(index + 1).padStart(2, "0")}</span>
+        </span>
+        <span className="grid size-12 place-items-center rounded-full bg-white text-ink-950 transition duration-500 group-hover:rotate-45 group-hover:bg-brand-500 group-hover:text-white">
+          <ArrowUpRight className="size-5" aria-hidden />
+        </span>
       </div>
+
+      <p className="text-sm font-medium text-brand-300">{service.tagline}</p>
+      <h3 className={cn("mt-2 font-semibold tracking-[-0.03em]", featured ? "text-4xl sm:text-5xl" : "text-3xl")}>
+        {service.title}
+      </h3>
+      <p className={cn("mt-3 leading-relaxed text-white/75", featured ? "max-w-lg text-lg" : "line-clamp-3")}>
+        {service.description}
+      </p>
+
+      <ul
+        className={cn(
+          "mt-5 flex flex-wrap gap-2 transition duration-500 lg:translate-y-3 lg:opacity-0 lg:group-hover:translate-y-0 lg:group-hover:opacity-100",
+          featured && "lg:translate-y-0 lg:opacity-100",
+        )}
+      >
+        {service.highlights.map((highlight) => (
+          <li
+            key={highlight}
+            className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium text-white/90 ring-1 ring-white/15"
+          >
+            <Check className="size-3 text-brand-300" strokeWidth={3} aria-hidden />
+            {highlight}
+          </li>
+        ))}
+      </ul>
+
+      {/* Der Link spannt über die ganze Karte (after:inset-0) */}
+      <Link href={service.href} className="absolute inset-0 z-10 rounded-4xl">
+        <span className="sr-only">
+          {service.title} – mehr erfahren
+        </span>
+      </Link>
     </article>
   );
 }

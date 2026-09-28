@@ -5,12 +5,13 @@ import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
 const variants = {
-  primary: "bg-brand-500 text-white shadow-glow hover:bg-brand-600",
-  dark: "bg-ink-950 text-white hover:bg-ink-800",
+  primary: "shine bg-brand-500 text-white shadow-glow hover:bg-brand-600 hover:shadow-glow-lg",
+  dark: "shine bg-ink-950 text-white hover:bg-ink-800",
   outline:
     "border border-ink-900/15 bg-white text-ink-900 hover:border-ink-950 hover:bg-ink-950 hover:text-white",
-  light: "bg-white text-ink-950 hover:bg-sand-100",
-  glass: "border border-white/25 bg-white/10 text-white backdrop-blur-md hover:bg-white/20",
+  light: "shine bg-white text-ink-950 hover:bg-sand-100",
+  glass: "border border-white/20 bg-white/10 text-white backdrop-blur-md hover:border-white/35 hover:bg-white/20",
+  whatsapp: "shine bg-whatsapp text-white hover:bg-whatsapp-dark",
 } as const;
 
 const sizes = {

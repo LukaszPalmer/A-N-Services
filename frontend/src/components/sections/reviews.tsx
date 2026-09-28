@@ -20,10 +20,10 @@ import { reviewPlatforms } from "@/content/reviews";
 export function Reviews() {
   return (
     <Section tone="dark" className="overflow-hidden">
-      <div aria-hidden className="absolute inset-0 bg-dots-light" />
+      <div aria-hidden className="absolute inset-0 bg-dots-light [mask-image:radial-gradient(ellipse_at_center,#000_20%,transparent_70%)]" />
       <div
         aria-hidden
-        className="absolute -bottom-40 left-1/2 size-[36rem] -translate-x-1/2 rounded-full bg-brand-500/20 blur-3xl"
+        className="absolute -bottom-72 left-1/2 size-[48rem] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgb(249_106_22/0.25),transparent_62%)]"
       />
 
       <Container className="relative">
@@ -33,7 +33,7 @@ export function Reviews() {
           eyebrow="Bewertungen"
           title={
             <>
-              Noch jung im Netz – <Highlight>nicht im Handwerk.</Highlight>
+              Noch jung im Netz – <Highlight className="text-brand-400">nicht im Handwerk.</Highlight>
             </>
           }
           description={`${siteConfig.name} ist gerade erst online gegangen. Unsere Profile bei Google und MyHammer sind im Aufbau, echte Bewertungen sammeln wir Schritt für Schritt. Erfundene Kundenstimmen finden Sie hier deshalb nicht – dafür bald echte.`}
@@ -43,7 +43,7 @@ export function Reviews() {
           {reviewPlatforms.map((platform) => (
             <li key={platform.name} className="reveal flex">
               {/* Noch kein Link – die Profile sind erst im Aufbau */}
-              <article className="flex w-full flex-col rounded-4xl bg-white/5 p-7 ring-1 ring-white/10 backdrop-blur-sm">
+              <article className="flex w-full flex-col rounded-4xl bg-white/[0.04] p-7 ring-1 ring-white/10 transition duration-500 hover:bg-white/[0.07] sm:p-8">
                 <div className="flex items-center gap-4">
                   <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white shadow-soft">
                     <platform.logo className="w-6 text-brand-600" />
@@ -66,8 +66,14 @@ export function Reviews() {
         </ul>
 
         {/* Bitte um Bewertung an bestehende Kunden */}
-        <div className="reveal mx-auto mt-5 max-w-3xl rounded-4xl bg-brand-500 px-7 py-8 sm:px-10">
-          <div className="flex flex-col gap-7 sm:flex-row sm:items-center sm:gap-8">
+        <div className="reveal relative mx-auto mt-5 max-w-3xl overflow-hidden rounded-4xl bg-linear-to-br from-brand-400 via-brand-500 to-brand-600 px-7 py-8 shadow-glow-lg sm:px-10">
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -top-16 -right-6 font-serif text-[12rem] leading-none text-white/10 italic select-none"
+          >
+            &amp;
+          </span>
+          <div className="relative flex flex-col gap-7 sm:flex-row sm:items-center sm:gap-8">
             <div className="flex-1">
               <h3 className="flex items-center gap-3 text-xl font-semibold text-white sm:text-2xl">
                 <Star className="size-6 shrink-0 fill-current" aria-hidden />

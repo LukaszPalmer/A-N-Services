@@ -5,9 +5,10 @@ import { createMetadata } from "@/lib/metadata";
 const service = getService("montageservice");
 
 export const metadata = createMetadata({
-  title: service.title,
-  description: service.description,
+  title: service.seoTitle,
+  description: service.seoDescription,
   path: service.href,
+  ogImage: service.slug,
 });
 
 export default function MontageservicePage() {

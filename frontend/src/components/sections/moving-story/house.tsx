@@ -1,29 +1,32 @@
 import type { CSSProperties } from "react";
 
 type HouseProps = {
-  /** CSS-Variable (0–1) für beleuchtete Fenster, z. B. "--old-lights" */
-  lightsVar: string;
-  /** Optionale CSS-Variable (0–1), die das Haus in Markenfarben "aufleben" lässt */
-  revealVar?: string;
+  /**
+   * base   – dunkles Haus mit dunklen Fenstern (Grundzustand)
+   * lights – nur die beleuchteten Fenster (Overlay, wird per opacity eingeblendet)
+   * home   – Haus in Markenfarben mit Licht (Overlay für die Ankunft)
+   */
+  variant: "base" | "lights" | "home";
   style?: CSSProperties;
   className?: string;
 };
 
-export function House({ lightsVar, revealVar, className, style }: HouseProps) {
+/**
+ * Haus-Silhouette der Umzugs-Story.
+ * Licht und Markenfarben liegen als eigene SVG-Ebenen übereinander. Animiert wird nur
+ * deren `opacity` – das Haus selbst muss dafür nie neu gezeichnet werden.
+ */
+export function House({ variant, className, style }: HouseProps) {
   return (
     <svg viewBox="0 0 180 170" aria-hidden className={className} style={style}>
-      <HouseShape body="fill-ink-600" roof="fill-ink-700" door="fill-ink-700" />
-      {revealVar && (
-        <g style={{ opacity: `var(${revealVar})` }}>
-          <HouseShape body="fill-sand-100" roof="fill-brand-500" door="fill-brand-700" />
-        </g>
+      {variant === "base" && (
+        <>
+          <HouseShape body="fill-ink-600" roof="fill-ink-700" door="fill-ink-700" />
+          <Windows className="fill-ink-950" />
+        </>
       )}
-
-      {/* Fenster: dunkel → beleuchtet */}
-      <Windows className="fill-ink-950" />
-      <g style={{ opacity: `var(${lightsVar})` }}>
-        <Windows className="fill-brand-200" />
-      </g>
+      {variant === "home" && <HouseShape body="fill-sand-100" roof="fill-brand-500" door="fill-brand-700" />}
+      {variant !== "base" && <Windows className="fill-brand-200" />}
       <g className="stroke-ink-800" strokeWidth={2.5}>
         <path d="M49 92v28M34 106h30M131 92v28M116 106h30M90 42v20M80 52h20" />
       </g>

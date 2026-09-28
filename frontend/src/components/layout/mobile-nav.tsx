@@ -1,13 +1,24 @@
 "use client";
 
-import { ArrowRight, Clock, Menu, Phone, X } from "lucide-react";
+import { ArrowUpRight, Clock, Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
+import { WhatsAppLogo } from "@/components/brand/whatsapp-logo";
 import { NavLink } from "@/components/layout/nav-link";
 import { ButtonLink, buttonStyles } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import { services } from "@/content/services";
 import type { NavItem } from "@/types";
 
+/**
+ * Mobiles Vollbild-Menü.
+ *
+ * Wird per Portal direkt in <body> gerendert: Der Header trägt `backdrop-filter`,
+ * und ein fixiertes Element darin würde sich sonst am Header statt am Bildschirm
+ * ausrichten. Der Header (z-50) bleibt über dem Menü (z-40) – so ist der
+ * Schließen-Knopf immer an derselben Stelle.
+ */
 export function MobileNav({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
@@ -36,69 +47,97 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-controls="mobile-menu"
-        className="grid size-11 place-items-center rounded-full border border-ink-900/10 text-ink-950 transition hover:bg-ink-50"
+        className="grid size-12 place-items-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:bg-white/20"
       >
         {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
         <span className="sr-only">{open ? "Menü schließen" : "Menü öffnen"}</span>
       </button>
 
-      {open && (
-        <div
-          id="mobile-menu"
-          className="fixed inset-x-0 top-20 bottom-0 z-40 flex animate-fade-in flex-col overflow-y-auto bg-white px-5 pt-6 pb-8 sm:px-8"
-        >
-          <nav aria-label="Mobile Navigation">
-            <ul className="divide-y divide-ink-900/5">
-              {items.map((item) => (
-                <li key={item.href} className="py-1">
-                  <NavLink
-                    href={item.href}
-                    onClick={close}
-                    className="flex items-center justify-between py-4 text-2xl font-medium text-ink-950"
-                    activeClassName="text-brand-600"
-                  >
-                    {item.label}
-                    <ArrowRight className="size-5 text-ink-300" aria-hidden />
-                  </NavLink>
+      {open && createPortal(<MenuPanel items={items} onNavigate={close} />, document.body)}
+    </div>
+  );
+}
 
-                  {/* Unterpunkte (Leistungen) direkt ausklappen – die Liste ist kurz genug */}
-                  {item.children && (
-                    <ul className="mb-3 grid gap-0.5">
-                      {item.children.map((child) => (
-                        <li key={child.href}>
-                          <NavLink
-                            href={child.href}
-                            onClick={close}
-                            className="flex items-center gap-3 rounded-2xl py-2.5 pl-1 text-lg text-ink-600"
-                            activeClassName="font-medium text-brand-600"
-                          >
-                            <span aria-hidden className="size-1.5 shrink-0 rounded-full bg-brand-400" />
-                            {child.label}
-                          </NavLink>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </nav>
+function MenuPanel({ items, onNavigate }: { items: NavItem[]; onNavigate: () => void }) {
+  const whatsappLink = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(
+    `Hallo ${siteConfig.name}, ich hätte gern ein unverbindliches Angebot.`,
+  )}`;
 
-          <div className="mt-auto grid gap-3 pt-10">
-            <ButtonLink href="/kontakt" size="lg" onClick={close}>
-              Kostenloses Angebot anfordern
-            </ButtonLink>
-            <a href={siteConfig.contact.phoneHref} className={buttonStyles({ variant: "outline", size: "lg" })}>
-              <Phone aria-hidden />
-              {siteConfig.contact.phone}
-            </a>
-            <p className="flex items-center justify-center gap-2 text-sm text-ink-500">
-              <Clock className="size-4 text-brand-500" aria-hidden />
-              {siteConfig.contact.openingHoursNote}
-            </p>
-          </div>
+  return (
+    <div
+      id="mobile-menu"
+      className="fixed inset-0 z-40 flex animate-fade-in flex-col overflow-y-auto bg-ink-950 px-5 pt-28 pb-8 text-white [animation-duration:300ms] sm:px-8 lg:hidden"
+    >
+      <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid-light opacity-60" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 -right-40 size-[30rem] rounded-full bg-[radial-gradient(circle,rgb(249_106_22/0.28),transparent_65%)]"
+      />
+
+      <nav aria-label="Mobile Navigation" className="relative">
+        <ul className="space-y-1">
+          {items.map((item, index) => (
+            <li key={item.href} className="animate-fade-up" style={{ animationDelay: `${80 + index * 70}ms` }}>
+              <NavLink
+                href={item.href}
+                onClick={onNavigate}
+                className="flex items-baseline gap-4 py-2.5 text-[2.5rem] leading-none font-semibold tracking-tight text-white"
+                activeClassName="text-brand-400"
+              >
+                <span className="w-7 text-xs font-medium tracking-[0.2em] text-white/35 tabular-nums">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                {item.label}
+              </NavLink>
+
+              {/* Unterpunkte (Leistungen) direkt als Kacheln – die Liste ist kurz genug */}
+              {item.children && (
+                <ul className="mt-3 mb-5 grid grid-cols-2 gap-2 pl-11">
+                  {services.map((service) => (
+                    <li key={service.href}>
+                      <NavLink
+                        href={service.href}
+                        onClick={onNavigate}
+                        className="flex items-center gap-2.5 rounded-2xl bg-white/[0.06] px-3 py-3 text-sm font-medium text-white/80 ring-1 ring-white/10 transition hover:bg-white/10"
+                        activeClassName="bg-brand-500/15 text-white ring-brand-500/40"
+                      >
+                        <service.icon className="size-4 shrink-0 text-brand-400" strokeWidth={1.75} aria-hidden />
+                        <span className="truncate">{service.title}</span>
+                      </NavLink>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div className="relative mt-auto grid animate-fade-up gap-3 pt-10 [animation-delay:320ms]">
+        <ButtonLink href="/kontakt" size="lg" onClick={onNavigate}>
+          Kostenloses Angebot anfordern
+          <ArrowUpRight aria-hidden />
+        </ButtonLink>
+        <div className="grid grid-cols-2 gap-3">
+          <a href={siteConfig.contact.phoneHref} className={buttonStyles({ variant: "glass", size: "lg" })}>
+            <Phone aria-hidden />
+            Anrufen
+          </a>
+          <a
+            href={whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonStyles({ variant: "whatsapp", size: "lg" })}
+          >
+            <WhatsAppLogo className="size-4" />
+            WhatsApp
+          </a>
         </div>
-      )}
+        <p className="mt-2 flex items-center justify-center gap-2 text-sm text-white/55">
+          <Clock className="size-4 text-brand-400" aria-hidden />
+          {siteConfig.contact.openingHoursNote}
+        </p>
+      </div>
     </div>
   );
 }

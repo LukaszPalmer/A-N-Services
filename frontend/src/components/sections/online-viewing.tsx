@@ -1,6 +1,7 @@
 import { BadgeEuro, Check, Mic, Phone, PhoneOff, Video } from "lucide-react";
 import Image from "next/image";
 
+import { LogoMark } from "@/components/brand/logo";
 import { WhatsAppLogo } from "@/components/brand/whatsapp-logo";
 import { buttonStyles } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -9,6 +10,7 @@ import { Section, type SectionTone } from "@/components/ui/section";
 import { Highlight, SectionHeading } from "@/components/ui/section-heading";
 import { siteConfig } from "@/config/site";
 import { images } from "@/content/images";
+import { cn } from "@/lib/utils";
 
 const steps = [
   {
@@ -34,14 +36,14 @@ const benefits = ["Kostenlos & unverbindlich", "Dauert rund 15 Minuten", "Rund 
  * Online-Besichtigung per WhatsApp – die digitale Alternative zum Vor-Ort-Termin
  * aus Schritt 2 des Ablaufs (siehe content/process.ts).
  */
-export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
+export function OnlineViewing({ tone = "white" }: { tone?: SectionTone }) {
   const whatsappLink = `${siteConfig.contact.whatsappHref}?text=${encodeURIComponent(
     `Hallo ${siteConfig.name}, ich hätte gern eine kostenlose Online-Besichtigung per WhatsApp.`,
   )}`;
 
   return (
     <Section tone={tone} className="overflow-hidden">
-      <Container className="grid items-center gap-16 lg:grid-cols-2 lg:gap-20">
+      <Container size="wide" className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
         <div>
           <SectionHeading
             eyebrow="Online-Besichtigung"
@@ -53,10 +55,15 @@ export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
             description="Sie müssen für ein Angebot niemanden in die Wohnung lassen. Im Videoanruf gehen Sie einmal mit der Kamera durch die Räume, wir erfassen alles Nötige – und Sie bekommen Ihren Festpreis."
           />
 
-          <ol className="mt-10 space-y-6">
+          <ol className="relative mt-12 space-y-8 before:absolute before:top-2 before:bottom-2 before:left-[1.1rem] before:w-px before:bg-linear-to-b before:from-brand-500 before:to-brand-500/0">
             {steps.map((step, index) => (
-              <li key={step.title} className="reveal flex gap-4">
-                <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-ink-950 text-sm font-semibold text-white">
+              <li key={step.title} className="reveal relative flex gap-5">
+                <span
+                  className={cn(
+                    "relative grid size-9 shrink-0 place-items-center rounded-full bg-ink-950 text-sm font-semibold text-white ring-4",
+                    tone === "sand" ? "ring-sand-50" : "ring-white",
+                  )}
+                >
                   {index + 1}
                 </span>
                 <div>
@@ -72,10 +79,7 @@ export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
               href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
-              className={buttonStyles(
-                { size: "lg" },
-                "bg-whatsapp shadow-none hover:bg-whatsapp-dark",
-              )}
+              className={buttonStyles({ variant: "whatsapp", size: "lg" })}
             >
               <WhatsAppLogo className="size-5" />
               Termin per WhatsApp
@@ -99,8 +103,16 @@ export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
         </div>
 
         {/* Illustration: so sieht der Videoanruf aus */}
-        <div className="reveal relative mx-auto w-full max-w-[19rem]">
-          <div className="relative rounded-[2.75rem] bg-ink-950 p-2.5 shadow-lifted">
+        <div className="reveal relative mx-auto w-full max-w-[20rem]">
+          <div
+            aria-hidden
+            className="absolute -inset-24 -z-10 rounded-full bg-[radial-gradient(circle,rgb(249_106_22/0.22),transparent_60%)]"
+          />
+          <div
+            aria-hidden
+            className="absolute top-10 -left-16 -z-10 hidden size-40 rounded-full bg-[radial-gradient(circle,rgb(37_211_102/0.25),transparent_65%)] sm:block"
+          />
+          <div className="relative rotate-2 rounded-[2.9rem] bg-ink-950 p-2.5 shadow-deep ring-1 ring-ink-900/10 transition duration-700 hover:rotate-0">
             <div className="relative aspect-[9/17] overflow-hidden rounded-[2.1rem]">
               <Image
                 src={images.besenrein.src}
@@ -117,8 +129,8 @@ export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
 
               {/* Kopfzeile des Anrufs */}
               <div className="absolute inset-x-3 top-3 flex items-center gap-2.5 rounded-2xl bg-white/10 p-2.5 ring-1 ring-white/15 backdrop-blur-md">
-                <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-brand-500 text-sm leading-none font-semibold text-white">
-                  &amp;
+                <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-ink-950 text-white">
+                  <LogoMark withWordmark={false} className="h-5 w-auto" />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-xs font-semibold text-white">{siteConfig.name}</span>
@@ -148,7 +160,7 @@ export function OnlineViewing({ tone = "sand" }: { tone?: SectionTone }) {
             </div>
           </div>
 
-          <div className="absolute -right-2 bottom-20 flex items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-lifted sm:-right-6">
+          <div className="absolute -right-2 bottom-20 flex animate-float items-center gap-3 rounded-2xl bg-white p-3 pr-5 shadow-deep ring-1 ring-ink-900/5 sm:-right-10">
             <IconBadge icon={BadgeEuro} variant="solid" />
             <div>
               <p className="text-sm font-semibold text-ink-950">Festpreis danach</p>
