@@ -19,8 +19,8 @@ export const metadata = createMetadata({
 /*
  * TODO vor dem Livegang:
  * - Hosting prüfen: Stand jetzt Vercel (Vorschau). Bei anderem Hoster Abschnitt 2 anpassen.
- * - Sobald das Kontaktformular per E-Mail-Dienst (z. B. Resend) versendet, Abschnitt 6
- *   um den Versanddienstleister ergänzen.
+ * - Auftragsverarbeitungsvertrag (Art. 28 DSGVO) mit IONOS im IONOS-Kundenbereich abschließen –
+ *   das Kontaktformular stellt über das IONOS-Postfach zu (Abschnitt 6, lib/mail.ts).
  * - Text juristisch prüfen lassen (Anwalt oder Generator, z. B. e-recht24).
  */
 export default function DatenschutzPage() {
@@ -106,6 +106,14 @@ export default function DatenschutzPage() {
               DSGVO). Die Daten löschen wir, sobald sie für die Bearbeitung nicht mehr erforderlich sind
               und keine gesetzlichen Aufbewahrungspflichten bestehen.
             </p>
+            <p>
+              Ihre Angaben werden verschlüsselt an unseren Server übertragen und von dort als E-Mail
+              (TLS-verschlüsselt) an unser Postfach bei unserem E-Mail-Anbieter IONOS SE, Elgendorfer
+              Str. 57, 56410 Montabaur, weitergeleitet. Andere Dienste sind am Versand nicht beteiligt.
+              Zum Schutz vor massenhaft automatisiert abgeschickten Anfragen hält der Server Ihre
+              IP-Adresse kurzzeitig im Arbeitsspeicher vor; dauerhaft gespeichert wird sie dafür nicht
+              (Art. 6 Abs. 1 lit. f DSGVO).
+            </p>
 
             <h2>7. Kontakt per Telefon, E-Mail und WhatsApp</h2>
             <p>
@@ -122,7 +130,23 @@ export default function DatenschutzPage() {
               Google werden erst übertragen, wenn Sie den Link aktiv anklicken.
             </p>
 
-            <h2>9. Ihre Rechte</h2>
+            <h2>9. Kundenbewertungen von MyHammer</h2>
+            <p>
+              Auf unserer Startseite zeigen wir ausgewählte Bewertungen, die Kundinnen und Kunden öffentlich
+              auf unserem Profil bei MyHammer (MyHammer GmbH, Dircksenstr. 4, 10179 Berlin) abgegeben haben.
+              Die Texte sind fest in diese Website übernommen: Es wird kein Widget geladen, und beim
+              Seitenaufruf werden keine Daten an MyHammer übertragen. Erst wenn Sie einen Link zu MyHammer
+              anklicken, gelten dort die Datenschutzbestimmungen von MyHammer.
+            </p>
+            <p>
+              Von den Verfasserinnen und Verfassern nennen wir nur den Vornamen mit abgekürztem Nachnamen
+              (bei anonymen Bewertungen „MyHammer-Kunde“) sowie den Ort, jeweils wie auf MyHammer angegeben.
+              Grundlage ist unser berechtigtes Interesse, öffentlich abgegebene Bewertungen unseres Betriebs
+              zu zeigen (Art. 6 Abs. 1 lit. f DSGVO). Wer seine Bewertung hier nicht sehen möchte, kann
+              jederzeit widersprechen – eine kurze Nachricht genügt, dann entfernen wir sie.
+            </p>
+
+            <h2>10. Ihre Rechte</h2>
             <ul>
               <li>Auskunft über Ihre gespeicherten Daten (Art. 15 DSGVO)</li>
               <li>Berichtigung, Löschung oder Einschränkung der Verarbeitung (Art. 16–18 DSGVO)</li>

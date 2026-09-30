@@ -16,6 +16,18 @@ npm run typecheck  # Routen-Typen generieren + tsc
 
 Umgebungsvariablen: `.env.example` nach `.env.local` kopieren.
 
+## Kontaktformular (E-Mail-Versand)
+
+Anfragen aus dem Formular gehen per Server Action (`src/lib/contact/actions.ts`) als E-Mail an
+`kontakt@services-an.de` – verschickt über das IONOS-Postfach selbst (SMTP, `src/lib/mail.ts`).
+„Antworten“ im Postfach schreibt direkt der anfragenden Person (Reply-To).
+
+Nötige Umgebungsvariablen: `SMTP_USER` und `SMTP_PASSWORD` (Postfach-Zugangsdaten),
+optional `SMTP_HOST` (Standard `smtp.ionos.de`) und `SMTP_PORT` (Standard `465`).
+Lokal in `.env.local`, live in Vercel unter **Settings → Environment Variables** – danach
+neu deployen. Das Repository ist öffentlich: Zugangsdaten niemals committen.
+Wird das Postfach-Passwort bei IONOS geändert, muss es an beiden Stellen nachgezogen werden.
+
 ## Ordnerstruktur
 
 ```
@@ -57,7 +69,9 @@ src/
 │
 ├── config/site.ts              # Firmendaten, Kontakt, Navigation
 ├── hooks/                      # React-Hooks (z. B. useScrollProgress)
-├── lib/                        # Hilfsfunktionen (cn, Metadaten, Animation, API-Clients)
+├── lib/                        # Hilfsfunktionen (cn, Metadaten, Animation)
+│   ├── contact/                #   Kontaktformular: Prüfung, E-Mail-Inhalt, Server Action
+│   └── mail.ts                 #   E-Mail-Versand über das IONOS-Postfach (nur Server)
 ├── types/                      # Gemeinsame TypeScript-Typen
 └── assets/images/              # Lokale Bilder (automatisch optimiert + Blur-Platzhalter)
 ```
@@ -101,7 +115,8 @@ ziehen ihre Einträge aus `services.ts` und aktualisieren sich dadurch automatis
 - [x] Logo & Favicon (`components/brand/logo.tsx`, `app/icon.svg`)
 - [ ] E-Mail-Adresse und Domain (`site.ts`, `.env.example`)
 - [ ] Kennzahlen in `src/content/stats.ts` und „+10 Jahre“ in `why-us.tsx` bestätigen
-- [ ] Bewertungsprofile verlinken, sobald sie online sind (`src/content/reviews.ts`)
+- [x] MyHammer-Bewertungen eingebunden (`src/content/reviews.ts`) – Google-Profil folgt
 - [ ] Eigene Fotos statt Unsplash (`src/content/images.ts`)
 - [ ] Impressum & Datenschutz mit rechtsgültigen Texten (Rechtsform, USt-IdNr.)
-- [ ] Backend für das Kontaktformular (`src/lib/api/contact.ts`)
+- [x] Kontaktformular → IONOS-Postfach (`src/lib/contact/`, Zugangsdaten nur als Umgebungsvariablen)
+- [ ] Auftragsverarbeitungsvertrag mit IONOS abschließen (IONOS-Kundenbereich)

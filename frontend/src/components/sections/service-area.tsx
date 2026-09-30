@@ -46,7 +46,7 @@ export function ServiceArea({ tone = "sand", serviceName }: { tone?: SectionTone
             description={`${serviceName ? `${serviceName} vom Team aus ${homeCity}` : `Von unserem Standort in ${homeCity} aus`} sind wir in der ganzen Region im Einsatz – kurze Anfahrt, schnelle Termine. ${note}.`}
           />
 
-          <ul className="mt-10 flex flex-wrap gap-2.5">
+          <ul className="mt-10 flex flex-wrap gap-3.5 sm:gap-4">
             {cities.map((city, index) => (
               <li
                 key={city}
@@ -60,7 +60,7 @@ export function ServiceArea({ tone = "sand", serviceName }: { tone?: SectionTone
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-sm text-ink-500">
+          <p className="mt-8 text-sm text-ink-500">
             Außerdem: {regions.join(", ")} · {note}.
           </p>
         </div>

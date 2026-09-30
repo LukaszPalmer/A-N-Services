@@ -1,7 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { Route } from "next";
 import type { StaticImageData } from "next/image";
-import type { ComponentType } from "react";
 
 export type NavItem = {
   label: string;
@@ -80,16 +79,39 @@ export type Stat = {
   label: string;
 };
 
-export type ReviewPlatform = {
-  /** Portalname, z. B. "Google" */
-  name: string;
-  /** Kurze Einordnung unter dem Namen, z. B. "Handwerker-Portal" */
-  channel: string;
-  description: string;
-  /** Aktueller Stand des Profils, z. B. "Profil im Aufbau" */
-  status: string;
-  /** Logo bzw. Symbol des Portals – nimmt eine className entgegen */
-  logo: ComponentType<{ className?: string }>;
+/** Unser Profil auf einem Bewertungsportal – Note und Anzahl so, wie das Portal sie angibt */
+export type ReviewProfile = {
+  /** Portalname, z. B. "MyHammer" */
+  platform: string;
+  /** Firmenprofil – für `sameAs` in den strukturierten Daten */
+  profileUrl: string;
+  /** Liste aller Bewertungen – dorthin verlinken wir zum Nachlesen */
+  reviewsUrl: string;
+  /** Bewertungsrichtlinie des Portals: belegt, wie die Echtheit geprüft wird (UWG § 5b Abs. 3) */
+  policyUrl: string;
+  /** Durchschnitt ALLER Bewertungen laut Portal, z. B. 4.7 */
+  rating: number;
+  /** Anzahl ALLER Bewertungen laut Portal */
+  count: number;
+  /** Stand von Note und Anzahl (JJJJ-MM-TT) */
+  asOf: string;
+};
+
+/** Eine Kundenbewertung – Text wörtlich vom Portal übernommen */
+export type Review = {
+  /** Vorname + Initial des Nachnamens, z. B. "Lea G." – fehlt bei anonymen Bewertungen */
+  name?: string;
+  /** Wohnort laut Portal */
+  location: string;
+  rating: 1 | 2 | 3 | 4 | 5;
+  /** Datum der Bewertung (JJJJ-MM-TT) */
+  date: string;
+  /** Auftragsart laut Portal, z. B. "Regionaler Umzug" */
+  service: string;
+  /** Bewertungstext – unverändert, inkl. Tippfehlern */
+  text: string;
+  /** Wörtlicher Ausschnitt aus `text`, der farbig hervorgehoben wird */
+  highlight?: string;
 };
 
 export type ServiceSlug =

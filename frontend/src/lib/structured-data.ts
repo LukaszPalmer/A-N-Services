@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { reviewProfile } from "@/content/reviews";
 import { services } from "@/content/services";
 import type { FaqItem, Service } from "@/types";
 
@@ -57,6 +58,9 @@ export function businessJsonLd(): JsonLdObject {
       addressCountry: "DE",
     },
     hasMap: contact.mapsHref,
+    // Profile auf anderen Plattformen. Bewusst ohne `aggregateRating`: Google untersagt,
+    // Bewertungen fremder Websites (hier MyHammer) als eigene Sterne auszuzeichnen.
+    sameAs: [reviewProfile.profileUrl],
     areaServed,
     // Rund um die Uhr geöffnet
     openingHoursSpecification: {

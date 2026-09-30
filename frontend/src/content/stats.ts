@@ -4,8 +4,8 @@ import type { Stat } from "@/types";
  * Kennzahlen für Trust-Leiste & "Über uns".
  * Die Werte werden beim Scrollen hochgezählt (siehe components/ui/count-up.tsx).
  *
- * Keine Bewertungs-Kennzahl hier: Die Bewertungsprofile sind erst im Aufbau
- * (siehe sections/reviews.tsx) – eine Sternebewertung wäre an dieser Stelle erfunden.
+ * Keine Bewertungs-Kennzahl hier: Die Sternebewertung steht mit Quelle und Stand im
+ * Abschnitt "Bewertungen" (sections/reviews.tsx, Daten in content/reviews.ts).
  *
  * TODO: "+10" und "<500" sind geschätzt – bitte mit echten Zahlen des Kunden
  * bestätigen oder entfernen.

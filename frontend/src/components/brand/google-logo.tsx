@@ -6,6 +6,9 @@ import { cn } from "@/lib/utils";
  * Wird ausschließlich zur Kennzeichnung unseres Google-Business-Profils verwendet
  * (beschreibende Nutzung der Marke). Nicht einfärben oder verzerren – Google gibt
  * die Darstellung vor: https://about.google/brand-resource-center/
+ *
+ * Derzeit nicht eingebunden: Das Google-Profil ist noch im Aufbau. Sobald es online ist,
+ * kommt es als zweite Bewertungsquelle neben MyHammer dazu (siehe content/reviews.ts).
  */
 export function GoogleLogo({ className }: { className?: string }) {
   return (

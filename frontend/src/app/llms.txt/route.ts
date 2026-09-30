@@ -1,7 +1,9 @@
 import { siteConfig } from "@/config/site";
 import { generalFaq } from "@/content/faq";
+import { reviewProfile, reviews } from "@/content/reviews";
 import { services } from "@/content/services";
 import { absoluteUrl } from "@/lib/structured-data";
+import { formatDate } from "@/lib/utils";
 
 /**
  * /llms.txt – kompakte Zusammenfassung der Firma für KI-Systeme (Standard: https://llmstxt.org).
@@ -52,6 +54,19 @@ ${service.features.map((feature) => `- ${feature.title}: ${feature.description}`
 2. Kostenlose Besichtigung vor Ort oder per WhatsApp-Videoanruf (ca. 15 Minuten).
 3. Verbindliches Festpreis-Angebot, schriftlich und ohne versteckte Kosten.
 4. Ausführung zum Wunschtermin – voll versichert.
+
+## Bewertungen
+
+${reviewProfile.rating.toLocaleString("de-DE", { minimumFractionDigits: 1 })} von 5 Sternen aus ${reviewProfile.count} Bewertungen auf ${reviewProfile.platform} (Stand: ${formatDate(reviewProfile.asOf)}). Alle Bewertungen: ${reviewProfile.reviewsUrl}
+
+Auswahl, wörtlich zitiert:
+
+${reviews
+  .map(
+    (review) =>
+      `- „${review.text}“ – ${review.name ?? `${reviewProfile.platform}-Kunde`} aus ${review.location} (${review.service}, ${formatDate(review.date)})`,
+  )
+  .join("\n")}
 
 ## Häufige Fragen
 
