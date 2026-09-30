@@ -46,16 +46,17 @@ export function ServiceArea({ tone = "sand", serviceName }: { tone?: SectionTone
             description={`${serviceName ? `${serviceName} vom Team aus ${homeCity}` : `Von unserem Standort in ${homeCity} aus`} sind wir in der ganzen Region im Einsatz – kurze Anfahrt, schnelle Termine. ${note}.`}
           />
 
-          <ul className="mt-10 flex flex-wrap gap-3.5 sm:gap-4">
+          {/* Mobil zwei gleich breite Spalten (bündig untereinander), ab sm fließende Reihe */}
+          <ul className="mt-10 grid grid-cols-2 gap-x-4 gap-y-5 sm:flex sm:flex-wrap sm:gap-4">
             {cities.map((city, index) => (
               <li
                 key={city}
                 className={cn(
-                  "inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ring-1",
+                  "inline-flex min-w-0 items-center gap-1.5 rounded-full px-3 py-2.5 text-[0.8125rem] font-medium ring-1 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
                   index === 0 ? "bg-brand-500 text-white ring-brand-500" : "bg-white text-ink-800 ring-ink-900/10",
                 )}
               >
-                <MapPin className={cn("size-3.5", index === 0 ? "text-white" : "text-brand-500")} aria-hidden />
+                <MapPin className={cn("size-3.5 shrink-0", index === 0 ? "text-white" : "text-brand-500")} aria-hidden />
                 {city}
               </li>
             ))}

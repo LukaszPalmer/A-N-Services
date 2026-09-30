@@ -27,6 +27,16 @@ optional `SMTP_HOST` (Standard `smtp.ionos.de`) und `SMTP_PORT` (Standard `465`)
 Lokal in `.env.local`, live in Vercel unter **Settings → Environment Variables** – danach
 neu deployen. Das Repository ist öffentlich: Zugangsdaten niemals committen.
 Wird das Postfach-Passwort bei IONOS geändert, muss es an beiden Stellen nachgezogen werden.
+Die Variablen gelten je Vercel-Projekt – beide Projekte (eigenes Team und Team des Kunden) brauchen sie.
+
+Voraussetzung im DNS der Domain (IONOS): MX `mx00.ionos.de` / `mx01.ionos.de`, SPF
+`v=spf1 include:_spf-eu.ionos.com ~all` und die IONOS-DKIM-CNAMEs (`s1-ionos._domainkey` usw.).
+Zeigt der MX woanders hin (z. B. Google), kommen E-Mails an `kontakt@` nicht im IONOS-Postfach an –
+Formular-Mails sehr wahrscheinlich auch nicht, obwohl smtp.ionos.de sie annimmt und der Versand
+Erfolg meldet. Prüfen: `nslookup -type=mx services-an.de`.
+
+Die Server-Funktionen laufen in Frankfurt (`"regions": ["fra1"]` in `vercel.json`) – Formulardaten
+werden in der EU verarbeitet, der Weg zum IONOS-Mailserver ist kurz.
 
 ## Ordnerstruktur
 
