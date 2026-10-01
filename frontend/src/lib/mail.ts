@@ -1,6 +1,6 @@
 import "server-only";
 
-import { createTransport } from "nodemailer";
+import { Resend } from "resend";
 
 import { siteConfig } from "@/config/site";
 
@@ -12,44 +12,36 @@ export type OutgoingMail = {
   replyTo?: { name: string; address: string };
 };
 
+/** Absender – die Domain ist bei Resend verifiziert (DNS: `resend._domainkey`, `send`) */
+const fromAddress = `website@${siteConfig.contact.email.split("@")[1]}`;
+
+/** Anzeigename für Mail-Header: Zeichen entfernen, die die Adressangabe zerschießen würden */
+function displayName(name: string) {
+  return `"${name.replace(/["<>\\\r\n]/g, "").trim()}"`;
+}
+
 /**
- * Verschickt eine E-Mail über das IONOS-Postfach an unsere Kontaktadresse (`siteConfig.contact.email`).
+ * Verschickt eine E-Mail über Resend an unsere Kontaktadresse (`siteConfig.contact.email`),
+ * zugestellt wird sie ins IONOS-Postfach.
  *
- * Zugangsdaten kommen nur aus Umgebungsvariablen: lokal aus `.env.local`, live aus Vercel
- * (Settings → Environment Variables). Das Repository ist öffentlich – Passwörter gehören
+ * Der API-Key kommt nur aus der Umgebungsvariable `RESEND_API_KEY`: lokal aus `.env.local`, live aus
+ * Vercel (Settings → Environment Variables). Das Repository ist öffentlich – Schlüssel gehören
  * weder in den Code noch in `.env.example`.
  *
- * Absender ist das Postfach selbst (IONOS nimmt nur eigene Absenderadressen an). Die anfragende
- * Person steht in Reply-To, "Antworten" im Postfach schreibt also direkt ihr.
+ * Die anfragende Person steht in Reply-To, "Antworten" im Postfach schreibt also direkt ihr.
  */
 export async function sendMail({ subject, text, html, replyTo }: OutgoingMail) {
-  const user = process.env.SMTP_USER;
-  const pass = process.env.SMTP_PASSWORD;
-  if (!user || !pass) throw new Error("SMTP_USER oder SMTP_PASSWORD ist nicht gesetzt.");
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error("RESEND_API_KEY ist nicht gesetzt.");
 
-  const port = Number(process.env.SMTP_PORT || 465);
-  const transporter = createTransport({
-    host: process.env.SMTP_HOST || "smtp.ionos.de",
-    port,
-    // 465: verschlüsselt ab dem ersten Byte · 587: STARTTLS, Verschlüsselung erzwungen
-    secure: port === 465,
-    requireTLS: port !== 465,
-    auth: { user, pass },
-    connectionTimeout: 10_000,
-    greetingTimeout: 10_000,
-    socketTimeout: 20_000,
+  const { error } = await new Resend(apiKey).emails.send({
+    from: `${displayName(`${siteConfig.name} · Website`)} <${fromAddress}>`,
+    to: siteConfig.contact.email,
+    replyTo: replyTo ? `${displayName(replyTo.name)} <${replyTo.address}>` : undefined,
+    subject,
+    text,
+    html,
   });
-
-  try {
-    await transporter.sendMail({
-      from: { name: `${siteConfig.name} · Website`, address: user },
-      to: siteConfig.contact.email,
-      replyTo,
-      subject,
-      text,
-      html,
-    });
-  } finally {
-    transporter.close();
-  }
+  // Resend wirft nicht, sondern meldet Fehler im Rückgabewert
+  if (error) throw new Error(`Resend: ${error.name} – ${error.message}`);
 }

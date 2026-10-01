@@ -19,8 +19,9 @@ export const metadata = createMetadata({
 /*
  * TODO vor dem Livegang:
  * - Hosting prüfen: Stand jetzt Vercel (Vorschau). Bei anderem Hoster Abschnitt 2 anpassen.
- * - Auftragsverarbeitungsvertrag (Art. 28 DSGVO) mit IONOS im IONOS-Kundenbereich abschließen –
- *   das Kontaktformular stellt über das IONOS-Postfach zu (Abschnitt 6, lib/mail.ts).
+ * - Auftragsverarbeitungsverträge (Art. 28 DSGVO) abschließen: mit Resend (Versand des
+ *   Kontaktformulars, resend.com/legal/dpa) und mit IONOS (Postfach, IONOS-Kundenbereich) –
+ *   Abschnitt 6, lib/mail.ts.
  * - Text juristisch prüfen lassen (Anwalt oder Generator, z. B. e-recht24).
  */
 export default function DatenschutzPage() {
@@ -107,10 +108,14 @@ export default function DatenschutzPage() {
               und keine gesetzlichen Aufbewahrungspflichten bestehen.
             </p>
             <p>
-              Ihre Angaben werden verschlüsselt an unseren Server übertragen und von dort als E-Mail
-              (TLS-verschlüsselt) an unser Postfach bei unserem E-Mail-Anbieter IONOS SE, Elgendorfer
-              Str. 57, 56410 Montabaur, weitergeleitet. Andere Dienste sind am Versand nicht beteiligt.
-              Zum Schutz vor massenhaft automatisiert abgeschickten Anfragen hält der Server Ihre
+              Ihre Angaben werden verschlüsselt an unseren Server übertragen und von dort über den
+              E-Mail-Versanddienst Resend (Plus Five Five, Inc., 2261 Market Street #5039, San Francisco,
+              CA 94114, USA) als E-Mail (TLS-verschlüsselt) an unser Postfach bei unserem E-Mail-Anbieter
+              IONOS SE, Elgendorfer Str. 57, 56410 Montabaur, weitergeleitet. Resend verarbeitet die Daten
+              in unserem Auftrag auf Grundlage eines Auftragsverarbeitungsvertrags; der Versand läuft
+              über Server in der EU (Irland). Eine Übermittlung in die USA ist dabei nicht
+              ausgeschlossen und erfolgt auf Grundlage des EU-US Data Privacy Framework bzw. von
+              Standardvertragsklauseln. Andere Dienste sind am Versand nicht beteiligt. Zum Schutz vor massenhaft automatisiert abgeschickten Anfragen hält der Server Ihre
               IP-Adresse kurzzeitig im Arbeitsspeicher vor; dauerhaft gespeichert wird sie dafür nicht
               (Art. 6 Abs. 1 lit. f DSGVO).
             </p>

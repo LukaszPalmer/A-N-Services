@@ -19,24 +19,24 @@ Umgebungsvariablen: `.env.example` nach `.env.local` kopieren.
 ## Kontaktformular (E-Mail-Versand)
 
 Anfragen aus dem Formular gehen per Server Action (`src/lib/contact/actions.ts`) als E-Mail an
-`kontakt@services-an.de` – verschickt über das IONOS-Postfach selbst (SMTP, `src/lib/mail.ts`).
+`kontakt@services-an.de` – verschickt über Resend (`src/lib/mail.ts`), Absender `website@services-an.de`.
 „Antworten“ im Postfach schreibt direkt der anfragenden Person (Reply-To).
 
-Nötige Umgebungsvariablen: `SMTP_USER` und `SMTP_PASSWORD` (Postfach-Zugangsdaten),
-optional `SMTP_HOST` (Standard `smtp.ionos.de`) und `SMTP_PORT` (Standard `465`).
+Nötige Umgebungsvariable: `RESEND_API_KEY`.
 Lokal in `.env.local`, live in Vercel unter **Settings → Environment Variables** – danach
-neu deployen. Das Repository ist öffentlich: Zugangsdaten niemals committen.
-Wird das Postfach-Passwort bei IONOS geändert, muss es an beiden Stellen nachgezogen werden.
-Die Variablen gelten je Vercel-Projekt – beide Projekte (eigenes Team und Team des Kunden) brauchen sie.
+neu deployen. Das Repository ist öffentlich: Schlüssel niemals committen.
+Die Variable gilt je Vercel-Projekt – beide Projekte (eigenes Team und Team des Kunden) brauchen sie.
 
-Voraussetzung im DNS der Domain (IONOS): MX `mx00.ionos.de` / `mx01.ionos.de`, SPF
+Voraussetzung im DNS für den Versand (Resend): TXT `resend._domainkey` sowie MX und SPF-TXT auf `send`;
+die Domain muss bei Resend unter **Domains** als „Verified“ stehen.
+
+Voraussetzung im DNS für den Empfang (IONOS): MX `mx00.ionos.de` / `mx01.ionos.de`, SPF
 `v=spf1 include:_spf-eu.ionos.com ~all` und die IONOS-DKIM-CNAMEs (`s1-ionos._domainkey` usw.).
 Zeigt der MX woanders hin (z. B. Google), kommen E-Mails an `kontakt@` nicht im IONOS-Postfach an –
-Formular-Mails sehr wahrscheinlich auch nicht, obwohl smtp.ionos.de sie annimmt und der Versand
-Erfolg meldet. Prüfen: `nslookup -type=mx services-an.de`.
+Formular-Mails auch nicht, obwohl Resend den Versand als Erfolg meldet. Prüfen: `nslookup -type=mx services-an.de`.
 
 Die Server-Funktionen laufen in Frankfurt (`"regions": ["fra1"]` in `vercel.json`) – Formulardaten
-werden in der EU verarbeitet, der Weg zum IONOS-Mailserver ist kurz.
+werden in der EU verarbeitet.
 
 ## Ordnerstruktur
 
@@ -81,7 +81,7 @@ src/
 ├── hooks/                      # React-Hooks (z. B. useScrollProgress)
 ├── lib/                        # Hilfsfunktionen (cn, Metadaten, Animation)
 │   ├── contact/                #   Kontaktformular: Prüfung, E-Mail-Inhalt, Server Action
-│   └── mail.ts                 #   E-Mail-Versand über das IONOS-Postfach (nur Server)
+│   └── mail.ts                 #   E-Mail-Versand über Resend (nur Server)
 ├── types/                      # Gemeinsame TypeScript-Typen
 └── assets/images/              # Lokale Bilder (automatisch optimiert + Blur-Platzhalter)
 ```
@@ -129,4 +129,4 @@ ziehen ihre Einträge aus `services.ts` und aktualisieren sich dadurch automatis
 - [ ] Eigene Fotos statt Unsplash (`src/content/images.ts`)
 - [ ] Impressum & Datenschutz mit rechtsgültigen Texten (Rechtsform, USt-IdNr.)
 - [x] Kontaktformular → IONOS-Postfach (`src/lib/contact/`, Zugangsdaten nur als Umgebungsvariablen)
-- [ ] Auftragsverarbeitungsvertrag mit IONOS abschließen (IONOS-Kundenbereich)
+- [ ] Auftragsverarbeitungsverträge mit Resend (resend.com/legal/dpa) und IONOS (IONOS-Kundenbereich) abschließen
